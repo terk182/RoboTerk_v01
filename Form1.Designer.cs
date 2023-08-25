@@ -95,7 +95,7 @@
             dataGridView1 = new DataGridView();
             tabPage2 = new TabPage();
             checkBox1 = new CheckBox();
-            textBox2 = new TextBox();
+            Gcode_input = new TextBox();
             panel2 = new Panel();
             command = new GroupBox();
             bt_send_cmd = new Button();
@@ -796,7 +796,7 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(checkBox1);
-            tabPage2.Controls.Add(textBox2);
+            tabPage2.Controls.Add(Gcode_input);
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
@@ -815,13 +815,13 @@
             checkBox1.Text = "inverse kinematics";
             checkBox1.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // Gcode_input
             // 
-            textBox2.Location = new Point(6, 46);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(429, 470);
-            textBox2.TabIndex = 0;
+            Gcode_input.Location = new Point(6, 46);
+            Gcode_input.Multiline = true;
+            Gcode_input.Name = "Gcode_input";
+            Gcode_input.Size = new Size(429, 470);
+            Gcode_input.TabIndex = 0;
             // 
             // panel2
             // 
@@ -1103,7 +1103,7 @@
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private TextBox textBox2;
+        private TextBox Gcode_input;
         private Button table_export;
         private TextBox textBox3;
         private PictureBox pictureBox1;

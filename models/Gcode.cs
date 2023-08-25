@@ -8,6 +8,7 @@ namespace RoboTerk_v01.models
 {
     public class Gcode
     {
-        public List<string>? gcode_cmd {get;set;}
+        public string gcode_cmd {get;set;}
+        public bool ik { get; set; }
     }
 }
