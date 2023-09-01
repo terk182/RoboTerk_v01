@@ -114,6 +114,9 @@
             timer_check_home = new System.Windows.Forms.Timer(components);
             timer_check_arm = new System.Windows.Forms.Timer(components);
             timer_check_arm2 = new System.Windows.Forms.Timer(components);
+            trackBar1 = new TrackBar();
+            trackBar2 = new TrackBar();
+            trackBar3 = new TrackBar();
             panel1.SuspendLayout();
             angle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar_x_sl).BeginInit();
@@ -138,14 +141,17 @@
             ((System.ComponentModel.ISupportInitialize)trackBar_delay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
             SuspendLayout();
             // 
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
-            statusStrip1.Location = new Point(0, 997);
+            statusStrip1.Location = new Point(0, 1033);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1268, 22);
+            statusStrip1.Size = new Size(1833, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -587,9 +593,9 @@
             // 
             // bt_ik_run
             // 
-            bt_ik_run.Location = new Point(24, 255);
+            bt_ik_run.Location = new Point(24, 313);
             bt_ik_run.Name = "bt_ik_run";
-            bt_ik_run.Size = new Size(216, 45);
+            bt_ik_run.Size = new Size(216, 33);
             bt_ik_run.TabIndex = 10;
             bt_ik_run.Text = "Run";
             bt_ik_run.UseVisualStyleBackColor = true;
@@ -597,9 +603,9 @@
             // 
             // bt_check_ik
             // 
-            bt_check_ik.Location = new Point(24, 206);
+            bt_check_ik.Location = new Point(24, 273);
             bt_check_ik.Name = "bt_check_ik";
-            bt_check_ik.Size = new Size(216, 43);
+            bt_check_ik.Size = new Size(216, 34);
             bt_check_ik.TabIndex = 9;
             bt_check_ik.Text = "Check IK";
             bt_check_ik.UseVisualStyleBackColor = true;
@@ -624,7 +630,7 @@
             groupBox6.Controls.Add(label9);
             groupBox6.Controls.Add(label8);
             groupBox6.Controls.Add(label7);
-            groupBox6.Location = new Point(24, 315);
+            groupBox6.Location = new Point(24, 352);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(216, 160);
             groupBox6.TabIndex = 7;
@@ -689,7 +695,7 @@
             groupBox5.Controls.Add(label5);
             groupBox5.Location = new Point(24, 29);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(216, 162);
+            groupBox5.Size = new Size(216, 223);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
             groupBox5.Text = "position";
@@ -706,7 +712,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(15, 118);
+            label6.Location = new Point(15, 157);
             label6.Name = "label6";
             label6.Size = new Size(18, 20);
             label6.TabIndex = 2;
@@ -714,7 +720,7 @@
             // 
             // z_position_txt
             // 
-            z_position_txt.Location = new Point(71, 111);
+            z_position_txt.Location = new Point(71, 154);
             z_position_txt.Name = "z_position_txt";
             z_position_txt.Size = new Size(125, 27);
             z_position_txt.TabIndex = 5;
@@ -728,7 +734,7 @@
             // 
             // y_position_txt
             // 
-            y_position_txt.Location = new Point(71, 72);
+            y_position_txt.Location = new Point(71, 92);
             y_position_txt.Name = "y_position_txt";
             y_position_txt.Size = new Size(125, 27);
             y_position_txt.TabIndex = 4;
@@ -736,7 +742,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(15, 75);
+            label5.Location = new Point(16, 95);
             label5.Name = "label5";
             label5.Size = new Size(17, 20);
             label5.TabIndex = 1;
@@ -884,11 +890,10 @@
             // 
             trackBar_speed.Location = new Point(159, 11);
             trackBar_speed.Maximum = 1500;
-            trackBar_speed.Minimum = 600;
             trackBar_speed.Name = "trackBar_speed";
             trackBar_speed.Size = new Size(418, 56);
             trackBar_speed.TabIndex = 0;
-            trackBar_speed.Value = 600;
+            trackBar_speed.Value = 400;
             trackBar_speed.Scroll += trackBar_speed_Scroll;
             // 
             // output_txt
@@ -947,8 +952,8 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = SystemColors.ActiveCaptionText;
-            pictureBox1.Location = new Point(1278, 12);
+            pictureBox1.BackColor = Color.Gray;
+            pictureBox1.Location = new Point(1278, 3);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(440, 440);
             pictureBox1.TabIndex = 10;
@@ -956,8 +961,8 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.BackColor = SystemColors.ActiveCaptionText;
-            pictureBox2.Location = new Point(1278, 479);
+            pictureBox2.BackColor = Color.Gray;
+            pictureBox2.Location = new Point(1277, 518);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(440, 440);
             pictureBox2.TabIndex = 11;
@@ -975,12 +980,40 @@
             // 
             timer_check_arm2.Tick += timer_check_arm2_Tick;
             // 
+            // trackBar1
+            // 
+            trackBar1.Location = new Point(1279, 439);
+            trackBar1.Maximum = 180;
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(439, 56);
+            trackBar1.TabIndex = 12;
+            trackBar1.Scroll += trackBar1_Scroll;
+            // 
+            // trackBar2
+            // 
+            trackBar2.Location = new Point(1278, 478);
+            trackBar2.Maximum = 180;
+            trackBar2.Name = "trackBar2";
+            trackBar2.Size = new Size(439, 56);
+            trackBar2.TabIndex = 13;
+            trackBar2.Scroll += trackBar2_Scroll;
+            // 
+            // trackBar3
+            // 
+            trackBar3.Location = new Point(1277, 964);
+            trackBar3.Name = "trackBar3";
+            trackBar3.Size = new Size(440, 56);
+            trackBar3.TabIndex = 14;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1268, 1019);
+            ClientSize = new Size(1833, 1055);
+            Controls.Add(trackBar3);
+            Controls.Add(trackBar2);
+            Controls.Add(trackBar1);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(groupBox8);
@@ -1029,6 +1062,9 @@
             ((System.ComponentModel.ISupportInitialize)trackBar_delay).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1120,5 +1156,8 @@
         private Button loop_sub;
         private Button Loop_add;
         private Label label13;
+        private TrackBar trackBar1;
+        private TrackBar trackBar2;
+        private TrackBar trackBar3;
     }
 }

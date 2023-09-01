@@ -15,9 +15,9 @@ namespace RoboTerk_v01
         Kinematics _Kinematics;
         SerialPort serialPort = new SerialPort();
         string recievedData;
-        double x  = 180;
-        double y  = 0;
-        double z  = 0;
+        double x = 180;
+        double y = 0;
+        double z = 0;
 
         string[] gcode_list;
         double x_count = 180;
@@ -26,9 +26,9 @@ namespace RoboTerk_v01
         int samping = 7;
         double y_count = 0;
         double z_count = 0;
-        double speed_to_home_x = 800;
-        double speed_to_home_y = 1200;
-        double speed_to_home_z = 800;
+        double speed_to_home_x = 400;
+        double speed_to_home_y = 400;
+        double speed_to_home_z = 400;
         int loop_run = 1;
         List<Gcode> _Gcode_list_cmd = new List<Gcode>();
         List<string> _Gcode_list_check = new List<string>();
@@ -47,6 +47,31 @@ namespace RoboTerk_v01
         delegate void SetTextCallback(string text);
         int L1_angle_start = 180;
         int L2_angle_start = 90;
+
+
+        int x_home_position = 25;
+        int z_home_position = 6;
+        int y_home_position = 152;
+        int defo = 450;
+
+
+
+        //----------------
+
+        Pen whitePen; //Pen - ezzel rajzoljuk a vonalakat
+        Pen myPen;    // azert kell ketto belole, hogy le is tudjuk torolni az addigi rajzot.
+        Brush myBrush;
+        Graphics pg, pg2;
+
+
+        List<position_rec> terk = new List<position_rec>();
+        List<position_rec> terk1 = new List<position_rec>();
+
+
+        //----------------
+
+
+
         public Form1()
         {
             _Kinematics = new Kinematics(135, 157, 156, 125, 125, 420, 50);
@@ -77,7 +102,7 @@ namespace RoboTerk_v01
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            trackBar_speed.Value = 1200;
+            trackBar_speed.Value = defo;
             speed_txt.Text = trackBar_speed.Value.ToString();
             x_deg_txt.Text = x.ToString();
             y_deg_txt.Text = y.ToString();
@@ -95,6 +120,10 @@ namespace RoboTerk_v01
             trackBar_y_sl.Value = tk_sl_y;
 
             bt_ik_run.Enabled = false;
+
+
+
+            pg = pictureBox1.CreateGraphics();
             //trackBar_x_sl.Enabled = false;
             //trackBar_y_sl.Enabled = false;
             //trackBar_z_sl.Enabled = false;
@@ -142,7 +171,7 @@ namespace RoboTerk_v01
                 // serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataRecieved);
 
 
-                 send("$X");
+                send("$X");
             }
             catch (Exception err)
             {
@@ -152,7 +181,7 @@ namespace RoboTerk_v01
 
         private void send(String message, bool type = false)
         {
-            
+
 
 
             if (type == false)
@@ -177,7 +206,7 @@ namespace RoboTerk_v01
                     try
                     {
                         send_ik(message);
-                        
+
 
                     }
                     catch
@@ -189,7 +218,7 @@ namespace RoboTerk_v01
                 }
                 else
                 {
-                    if(message.Contains("MS") || message.Contains("P4"))
+                    if (message.Contains("MS") || message.Contains("P4"))
                     {
                         serialPort.Write(message + "\n\r");
                     }
@@ -197,7 +226,7 @@ namespace RoboTerk_v01
                     {
                         sub_command(_Gcode_list_check);
                     }
-                   
+
                 }
             }
 
@@ -208,7 +237,7 @@ namespace RoboTerk_v01
         }
 
 
-        private async Task send_ik(String message, bool type = false)
+        private void send_ik(String message, bool type = false)
         {
             var new_cmd_value = decode_gocde(message);
 
@@ -218,12 +247,6 @@ namespace RoboTerk_v01
 
         }
 
-        private async Task send_gcode_list(List<Gcode> gcode)
-        {
-
-
-
-        }
 
 
 
@@ -263,9 +286,10 @@ namespace RoboTerk_v01
             var loop = Math.Abs(Math.Abs(new_cmd_value.y) - Math.Abs(old_cmd_value.y)) / samping;
             var direct = new_cmd_value.y - old_cmd_value.y;
 
-            bool di_check = direct > 0? true : false;
+            bool di_check = direct > 0 ? true : false;
 
-            if (direct == 0) {
+            if (direct == 0)
+            {
 
                 send_ik(new_cmd);
                 return;
@@ -286,7 +310,7 @@ namespace RoboTerk_v01
             {
                 StringBuilder txt = new StringBuilder();
                 output_txt.Text += "";
-               var loop_value = old_cmd_value.y;
+                var loop_value = old_cmd_value.y;
                 for (int i = 0; i < samping; i++)
                 {
                     if (di_check == true)
@@ -301,8 +325,8 @@ namespace RoboTerk_v01
                     //serialPort.Write(String.Format("{0}X{1}Y{2}Z{3}F{4}", new_cmd_value.h, data.theta1, data.baseAngle, data.theta2, new_cmd_value.f) + "\n\r");
                     txt.Append(String.Format("{0}X{1}Y{2}Z{3}F{4}\n\r", new_cmd_value.h, data.theta1, data.baseAngle, data.theta2, new_cmd_value.f));
 
-        
-                    
+
+
                 }
                 serialPort.Write(txt.ToString());
 
@@ -391,7 +415,7 @@ namespace RoboTerk_v01
 
         private void bt_z_sub_Click(object sender, EventArgs e)
         {
-             send(String.Format("$J=G91G21Z-{0}F{1}", step, trackBar_speed.Value));
+            send(String.Format("$J=G91G21Z-{0}F{1}", step, trackBar_speed.Value));
 
 
             z_count -= step;
@@ -408,7 +432,7 @@ namespace RoboTerk_v01
 
         private void bt_y_sub_Click(object sender, EventArgs e)
         {
-             send(String.Format("$J=G91G21Y-{0}F{1}", step, trackBar_speed.Value));
+            send(String.Format("$J=G91G21Y-{0}F{1}", step, trackBar_speed.Value));
 
 
             y_count -= step;
@@ -501,7 +525,7 @@ namespace RoboTerk_v01
             Thread.Sleep(1000);
             send("G10P0L20Z0");
             Thread.Sleep(1000);
-            send(String.Format("G0Z-200"));
+            send(String.Format("G1Z-200F{0}", trackBar_speed.Value));
             timer_check_arm.Enabled = true;
             timer_check_arm.Start();
             timer_check_arm.Interval = 500;
@@ -521,7 +545,7 @@ namespace RoboTerk_v01
                 Thread.Sleep(1000);
                 send("G10P0L20Y0");
                 Thread.Sleep(1000);
-                send(String.Format("G0Y-{0}", 155));
+                send(String.Format("G1Y-{0}F{1}", y_home_position, trackBar_speed.Value));
                 check_linit_count++;
             }
 
@@ -581,7 +605,7 @@ namespace RoboTerk_v01
                 Thread.Sleep(1000);
                 send("G10P0L20Z0");
                 Thread.Sleep(1000);
-                send(String.Format("G0Z{0}", 8));
+                send(String.Format("G1Z{0}F{1}", z_home_position, trackBar_speed.Value));
                 check_linit_count++;
             }
 
@@ -593,7 +617,7 @@ namespace RoboTerk_v01
                     timer_check_arm.Enabled = false;
                     output_txt.BackColor = Color.White;
                     Thread.Sleep(1000);
-                    send(String.Format("G0X360"));
+                    send(String.Format("G1X360F{0}", trackBar_speed.Value));
                     Thread.Sleep(1000);
                     timer_check_arm2.Enabled = true;
                     timer_check_arm2.Interval = 500;
@@ -615,7 +639,7 @@ namespace RoboTerk_v01
                 Thread.Sleep(1000);
                 send("G10P0L20X0");
                 Thread.Sleep(1000);
-                send(String.Format("G0X-{0}", 30));
+                send(String.Format("G1X-{0}F{1}", x_home_position, trackBar_speed.Value));
                 check_linit_count++;
             }
 
@@ -628,7 +652,7 @@ namespace RoboTerk_v01
                     output_txt.BackColor = Color.White;
 
                     Thread.Sleep(1000);
-                    send(String.Format("$J=G91G21Y{0}F{1}", 400, speed_to_home_y));
+                    send(String.Format("G1Y{0}F{1}", 400, speed_to_home_y));
                     Thread.Sleep(1000);
                     timer_check_home.Enabled = true;
                     timer_check_home.Interval = 500;
@@ -643,7 +667,7 @@ namespace RoboTerk_v01
 
         private void bt_home_Click(object sender, EventArgs e)
         {
-            send("G0X180Y0Z0");
+            send(string.Format("G1X180Y0Z0F{0}", trackBar_speed.Value));
             x = 180;
             y = 0;
             z = 0;
@@ -661,7 +685,7 @@ namespace RoboTerk_v01
             y_deg_txt.Text = y_count.ToString("00.00");
 
 
-           send(String.Format("G1Y{0}F{1}", y_deg_txt.Text, trackBar_speed.Value));
+            send(String.Format("G1Y{0}F{1}", y_deg_txt.Text, trackBar_speed.Value));
         }
 
         private void trackBar_z_sl_Scroll(object sender, EventArgs e)
@@ -693,7 +717,7 @@ namespace RoboTerk_v01
             {
 
                 for (int i = 0; i < loop_run; i++)
-                { 
+                {
                     for (int rows = 0; rows < dataGridView1.Rows.Count - 1; rows++)
                     {
 
@@ -701,9 +725,9 @@ namespace RoboTerk_v01
                         var value1 = dataGridView1.Rows[rows].Cells[1].Value.ToString();
                         var value2 = dataGridView1.Rows[rows].Cells[2].Value.ToString();
 
-                         send(value1, value2 == "IK" ? true : false);
+                        send(value1, value2 == "IK" ? true : false);
                         var check = check_retun_cmd();
-                        if(check == false)
+                        if (check == false)
                         {
                             Thread.Sleep(1000);
                         }
@@ -711,7 +735,7 @@ namespace RoboTerk_v01
 
                     }
                 }
-          
+
 
 
 
@@ -738,14 +762,14 @@ namespace RoboTerk_v01
 
                 string[] stringSeparators = new string[] { "\r\n" };
                 string[] lines = txt.Split(stringSeparators, StringSplitOptions.None);
-               
+
                 output_txt.Text = "";
 
                 for (int i = 0; i < loop_run; i++)
                 {
                     foreach (string s in lines)
                     {
-                         send(s, true);
+                        send(s, true);
 
                     }
                     //clear_cmd();
@@ -758,12 +782,12 @@ namespace RoboTerk_v01
         private bool check_retun_cmd()
         {
             var result = false;
-            for(int i = 0;i<1000000;i++)
-            if (check_return_ok.Contains("ok"))
+            for (int i = 0; i < 1000000; i++)
+                if (check_return_ok.Contains("ok"))
                 {
                     result = true;
                     break;
-                   
+
                 }
 
             check_return_ok = "";
@@ -864,6 +888,113 @@ namespace RoboTerk_v01
                 loop_run = 1;
             }
             loop_txt.Text = loop_run.ToString();
+        }
+
+        private void d_l(int teta1, Color _c)
+        {
+            //pontok poziciojanak kiszamitasa
+            var wk = 420;
+            teta1 = teta1 - 90;
+            var teta1_c = ((Math.PI / 180) * teta1);
+            var x = 50 + (int)(Math.Cos(teta1_c) * L1);
+            var y = Math.Abs(wk - 206) + (int)(Math.Sin(teta1_c) * L1);
+
+            Pen _pen = new Pen(_c, 5);
+            pg.DrawLine(_pen, 50, Math.Abs(wk - 206), x, y);
+            pan_c(_pen);
+            terk.Add(new position_rec
+            {
+                x_start = 50,
+                y_start = Math.Abs(wk - 206),
+                x_end = x,
+                y_end = y,
+                x2_start = x,
+                y2_start = y,
+
+
+            });
+        }
+
+        private void d_l2(int teta1, Color _c, List<position_rec> po)
+        {
+            //pontok poziciojanak kiszamitasa
+
+            var _po = po.Last();
+            var wk = 420;
+
+            var teta1_c = ((Math.PI / 180) * teta1);
+            var x = _po.x2_start + (int)(Math.Cos(teta1_c) * L2);
+            var y = Math.Abs(_po.y2_start) + (int)(Math.Sin(teta1_c) * L2);
+
+            Pen _pen = new Pen(_c, 5);
+            pg.DrawLine(_pen, _po.x2_start, _po.y2_start, x, y);
+
+            pg.DrawLine(_pen, x, y, x + 125, y);
+            pan_c(_pen);
+            terk1.Add(new position_rec
+            {
+                x_start = _po.x2_start,
+                y_start = _po.y2_start,
+                x_end = x,
+                y_end = y,
+                x2_start = _po.x2_start,
+                y2_start = _po.y2_start,
+
+            });
+        }
+        private void c_l(List<position_rec> po)
+        {
+
+            Pen _pen = new Pen(Color.Gray, 5);
+            pg.DrawLine(_pen, po.Last().x_start, po.Last().y_start, po.Last().x_end, po.Last().y_end);
+            pg.DrawLine(_pen, po.Last().x_end, po.Last().y_end, po.Last().x_end + 125, po.Last().y_end);
+            pan_c(_pen);
+
+        }
+        private void c_l2(List<position_rec> po)
+        {
+
+            Pen _pen = new Pen(Color.Gray, 5);
+            pg.DrawLine(_pen, po.Last().x_start, po.Last().y_start, po.Last().x_end, po.Last().y_end);
+            pan_c(_pen);
+
+        }
+
+        private void pan_c(Pen _pan)
+        {
+            var wk = 420;
+
+            pg.DrawEllipse(_pan, 45, Math.Abs(wk - 206) - 5, 10, 10);
+            pg.DrawLine(_pan, 50, Math.Abs(wk - 50), 50, Math.Abs(wk - 206));
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+
+
+            if (terk.Any())
+            {
+                c_l(terk);
+
+            }
+            d_l(trackBar1.Value, Color.Red);
+            if (terk1.Any())
+            {
+                c_l(terk1);
+
+            }
+
+
+            d_l2(trackBar1.Value, Color.Red, terk);
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            if (terk1.Any())
+            {
+                c_l(terk1);
+            }
+            d_l2(trackBar2.Value, Color.Red, terk);
         }
     }
 }
