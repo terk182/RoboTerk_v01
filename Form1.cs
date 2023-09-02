@@ -52,7 +52,7 @@ namespace RoboTerk_v01
         int x_home_position = 25;
         int z_home_position = 6;
         int y_home_position = 152;
-        int defo = 450;
+        int defo = 800;
 
 
 
@@ -469,7 +469,7 @@ namespace RoboTerk_v01
             });
 
             // 
-            string[] row = new string[] { String.Format("{0}", row_num), String.Format("G1X{0},Y{1},Z{2},F{3}", x_deg_txt.Text, y_deg_txt.Text, z_deg_txt.Text, trackBar_speed.Value), "" };
+            string[] row = new string[] { String.Format("{0}", row_num), String.Format("G1X{0}Y{1}Z{2}F{3}", x_deg_txt.Text, y_deg_txt.Text, z_deg_txt.Text, trackBar_speed.Value), "" };
             dataGridView1.Rows.Add(row);
             row_num++;
             //row = new string[] { "2", "Product 2", "2000" };
