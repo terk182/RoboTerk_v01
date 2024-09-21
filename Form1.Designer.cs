@@ -63,6 +63,7 @@
             label1 = new Label();
             trackBar_y_sl = new TrackBar();
             groupBox2 = new GroupBox();
+            button1 = new Button();
             bt_default_position = new Button();
             bt_01x = new Button();
             bt_10x = new Button();
@@ -88,9 +89,21 @@
             x_position_txt = new TextBox();
             y_position_txt = new TextBox();
             label5 = new Label();
+            ik_x = new TrackBar();
+            ik_y = new TrackBar();
+            ik_z = new TrackBar();
+            z_fk = new Label();
+            y_fk = new Label();
+            X_fk = new Label();
             groupBox4 = new GroupBox();
+            step4 = new CheckBox();
+            step3 = new CheckBox();
+            step2 = new CheckBox();
+            step1 = new CheckBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            clearTable = new Button();
+            label12 = new Label();
             table_export = new Button();
             dataGridView1 = new DataGridView();
             tabPage2 = new TabPage();
@@ -117,6 +130,10 @@
             trackBar1 = new TrackBar();
             trackBar2 = new TrackBar();
             trackBar3 = new TrackBar();
+            groupBox9 = new GroupBox();
+            label16 = new Label();
+            label15 = new Label();
+            label14 = new Label();
             panel1.SuspendLayout();
             angle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBar_x_sl).BeginInit();
@@ -128,6 +145,9 @@
             groupBox3.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ik_x).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ik_y).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ik_z).BeginInit();
             groupBox4.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -144,6 +164,7 @@
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
+            groupBox9.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip1
@@ -151,7 +172,7 @@
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Location = new Point(0, 1033);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1833, 22);
+            statusStrip1.Size = new Size(1278, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -169,6 +190,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1242, 52);
             panel1.TabIndex = 1;
+            panel1.Paint += panel1_Paint;
             // 
             // label13
             // 
@@ -302,7 +324,7 @@
             // trackBar_x_sl
             // 
             trackBar_x_sl.Location = new Point(16, 222);
-            trackBar_x_sl.Maximum = 90;
+            trackBar_x_sl.Maximum = 100;
             trackBar_x_sl.Name = "trackBar_x_sl";
             trackBar_x_sl.Size = new Size(242, 56);
             trackBar_x_sl.TabIndex = 18;
@@ -315,7 +337,7 @@
             bt_x_sub.Name = "bt_x_sub";
             bt_x_sub.Size = new Size(94, 29);
             bt_x_sub.TabIndex = 9;
-            bt_x_sub.Text = "-X(L1 ลง)";
+            bt_x_sub.Text = "-X(L1 ขึ้น)";
             bt_x_sub.UseVisualStyleBackColor = true;
             bt_x_sub.Click += bt_x_sub_Click;
             // 
@@ -325,7 +347,7 @@
             bt_x_add.Name = "bt_x_add";
             bt_x_add.Size = new Size(94, 29);
             bt_x_add.TabIndex = 8;
-            bt_x_add.Text = "+X(L1 ขึ้น)";
+            bt_x_add.Text = "+X(L1 ลง)";
             bt_x_add.UseVisualStyleBackColor = true;
             bt_x_add.Click += bt_x_add_Click;
             // 
@@ -395,7 +417,7 @@
             // trackBar_gripper_position
             // 
             trackBar_gripper_position.Location = new Point(6, 83);
-            trackBar_gripper_position.Maximum = 1000;
+            trackBar_gripper_position.Maximum = 255;
             trackBar_gripper_position.Name = "trackBar_gripper_position";
             trackBar_gripper_position.Size = new Size(230, 56);
             trackBar_gripper_position.TabIndex = 12;
@@ -493,6 +515,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(button1);
             groupBox2.Controls.Add(bt_default_position);
             groupBox2.Controls.Add(bt_01x);
             groupBox2.Controls.Add(bt_10x);
@@ -506,6 +529,16 @@
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "function";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(10, 505);
+            button1.Name = "button1";
+            button1.Size = new Size(146, 44);
+            button1.TabIndex = 20;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // bt_default_position
             // 
@@ -586,7 +619,7 @@
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Location = new Point(504, 143);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 586);
+            groupBox3.Size = new Size(295, 586);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Cartesian";
@@ -595,7 +628,7 @@
             // 
             bt_ik_run.Location = new Point(24, 313);
             bt_ik_run.Name = "bt_ik_run";
-            bt_ik_run.Size = new Size(216, 33);
+            bt_ik_run.Size = new Size(255, 33);
             bt_ik_run.TabIndex = 10;
             bt_ik_run.Text = "Run";
             bt_ik_run.UseVisualStyleBackColor = true;
@@ -605,7 +638,7 @@
             // 
             bt_check_ik.Location = new Point(24, 273);
             bt_check_ik.Name = "bt_check_ik";
-            bt_check_ik.Size = new Size(216, 34);
+            bt_check_ik.Size = new Size(255, 34);
             bt_check_ik.TabIndex = 9;
             bt_check_ik.Text = "Check IK";
             bt_check_ik.UseVisualStyleBackColor = true;
@@ -616,7 +649,7 @@
             bt_Cartesian_save.BackColor = Color.SeaGreen;
             bt_Cartesian_save.Location = new Point(24, 518);
             bt_Cartesian_save.Name = "bt_Cartesian_save";
-            bt_Cartesian_save.Size = new Size(216, 50);
+            bt_Cartesian_save.Size = new Size(265, 50);
             bt_Cartesian_save.TabIndex = 8;
             bt_Cartesian_save.Text = "SAVE";
             bt_Cartesian_save.UseVisualStyleBackColor = false;
@@ -632,7 +665,7 @@
             groupBox6.Controls.Add(label7);
             groupBox6.Location = new Point(24, 352);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(216, 160);
+            groupBox6.Size = new Size(265, 160);
             groupBox6.TabIndex = 7;
             groupBox6.TabStop = false;
             groupBox6.Text = "angle";
@@ -641,21 +674,22 @@
             // 
             base_deg_txt.Location = new Point(88, 123);
             base_deg_txt.Name = "base_deg_txt";
-            base_deg_txt.Size = new Size(108, 27);
+            base_deg_txt.Size = new Size(80, 27);
             base_deg_txt.TabIndex = 5;
+            base_deg_txt.TextChanged += base_deg_txt_TextChanged;
             // 
             // link1_deg_txt
             // 
             link1_deg_txt.Location = new Point(88, 79);
             link1_deg_txt.Name = "link1_deg_txt";
-            link1_deg_txt.Size = new Size(108, 27);
+            link1_deg_txt.Size = new Size(80, 27);
             link1_deg_txt.TabIndex = 4;
             // 
             // link2_deg_txt
             // 
             link2_deg_txt.Location = new Point(88, 39);
             link2_deg_txt.Name = "link2_deg_txt";
-            link2_deg_txt.Size = new Size(108, 27);
+            link2_deg_txt.Size = new Size(80, 27);
             link2_deg_txt.TabIndex = 3;
             // 
             // label9
@@ -693,12 +727,16 @@
             groupBox5.Controls.Add(x_position_txt);
             groupBox5.Controls.Add(y_position_txt);
             groupBox5.Controls.Add(label5);
+            groupBox5.Controls.Add(ik_x);
+            groupBox5.Controls.Add(ik_y);
+            groupBox5.Controls.Add(ik_z);
             groupBox5.Location = new Point(24, 29);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(216, 223);
+            groupBox5.Size = new Size(255, 223);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
             groupBox5.Text = "position";
+            groupBox5.Enter += groupBox5_Enter;
             // 
             // label4
             // 
@@ -720,24 +758,27 @@
             // 
             // z_position_txt
             // 
-            z_position_txt.Location = new Point(71, 154);
+            z_position_txt.Location = new Point(43, 157);
             z_position_txt.Name = "z_position_txt";
             z_position_txt.Size = new Size(125, 27);
             z_position_txt.TabIndex = 5;
+            z_position_txt.TextChanged += z_position_txt_TextChanged;
             // 
             // x_position_txt
             // 
-            x_position_txt.Location = new Point(71, 33);
+            x_position_txt.Location = new Point(43, 33);
             x_position_txt.Name = "x_position_txt";
             x_position_txt.Size = new Size(125, 27);
             x_position_txt.TabIndex = 3;
+            x_position_txt.TextChanged += x_position_txt_TextChanged;
             // 
             // y_position_txt
             // 
-            y_position_txt.Location = new Point(71, 92);
+            y_position_txt.Location = new Point(43, 92);
             y_position_txt.Name = "y_position_txt";
             y_position_txt.Size = new Size(125, 27);
             y_position_txt.TabIndex = 4;
+            y_position_txt.TextChanged += y_position_txt_TextChanged;
             // 
             // label5
             // 
@@ -748,55 +789,181 @@
             label5.TabIndex = 1;
             label5.Text = "Y";
             // 
+            // ik_x
+            // 
+            ik_x.Location = new Point(15, 63);
+            ik_x.Maximum = 350;
+            ik_x.Minimum = 250;
+            ik_x.Name = "ik_x";
+            ik_x.Size = new Size(234, 56);
+            ik_x.TabIndex = 6;
+            ik_x.Value = 250;
+            ik_x.Scroll += ik_x_Scroll;
+            // 
+            // ik_y
+            // 
+            ik_y.Location = new Point(15, 125);
+            ik_y.Maximum = 420;
+            ik_y.Name = "ik_y";
+            ik_y.Size = new Size(234, 56);
+            ik_y.TabIndex = 7;
+            ik_y.Scroll += ik_y_Scroll;
+            // 
+            // ik_z
+            // 
+            ik_z.Location = new Point(16, 187);
+            ik_z.Maximum = 250;
+            ik_z.Name = "ik_z";
+            ik_z.Size = new Size(233, 56);
+            ik_z.TabIndex = 8;
+            ik_z.Scroll += ik_z_Scroll;
+            // 
+            // z_fk
+            // 
+            z_fk.AutoSize = true;
+            z_fk.Location = new Point(342, 35);
+            z_fk.Name = "z_fk";
+            z_fk.Size = new Size(17, 20);
+            z_fk.TabIndex = 8;
+            z_fk.Text = "0";
+            // 
+            // y_fk
+            // 
+            y_fk.AutoSize = true;
+            y_fk.Location = new Point(196, 35);
+            y_fk.Name = "y_fk";
+            y_fk.Size = new Size(17, 20);
+            y_fk.TabIndex = 7;
+            y_fk.Text = "0";
+            // 
+            // X_fk
+            // 
+            X_fk.AutoSize = true;
+            X_fk.Location = new Point(67, 35);
+            X_fk.Name = "X_fk";
+            X_fk.Size = new Size(17, 20);
+            X_fk.TabIndex = 6;
+            X_fk.Text = "0";
+            // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(step4);
+            groupBox4.Controls.Add(step3);
+            groupBox4.Controls.Add(step2);
+            groupBox4.Controls.Add(step1);
             groupBox4.Controls.Add(tabControl1);
-            groupBox4.Location = new Point(770, 143);
+            groupBox4.Location = new Point(816, 231);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(484, 699);
+            groupBox4.Size = new Size(438, 611);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
             groupBox4.Text = "groupBox4";
+            // 
+            // step4
+            // 
+            step4.AutoSize = true;
+            step4.Location = new Point(312, 640);
+            step4.Name = "step4";
+            step4.Size = new Size(106, 24);
+            step4.TabIndex = 5;
+            step4.Text = "step4(Prox)";
+            step4.TextImageRelation = TextImageRelation.TextBeforeImage;
+            step4.UseVisualStyleBackColor = true;
+            step4.CheckedChanged += step4_CheckedChanged;
+            // 
+            // step3
+            // 
+            step3.AutoSize = true;
+            step3.Location = new Point(223, 640);
+            step3.Name = "step3";
+            step3.Size = new Size(67, 24);
+            step3.TabIndex = 4;
+            step3.Text = "step3";
+            step3.UseVisualStyleBackColor = true;
+            step3.CheckedChanged += step3_CheckedChanged;
+            // 
+            // step2
+            // 
+            step2.AutoSize = true;
+            step2.Location = new Point(132, 640);
+            step2.Name = "step2";
+            step2.Size = new Size(67, 24);
+            step2.TabIndex = 3;
+            step2.Text = "step2";
+            step2.UseVisualStyleBackColor = true;
+            step2.CheckedChanged += step2_CheckedChanged;
+            // 
+            // step1
+            // 
+            step1.AutoSize = true;
+            step1.Location = new Point(41, 640);
+            step1.Name = "step1";
+            step1.Size = new Size(67, 24);
+            step1.TabIndex = 2;
+            step1.Text = "step1";
+            step1.UseVisualStyleBackColor = true;
+            step1.CheckedChanged += step1_CheckedChanged;
             // 
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(15, 29);
+            tabControl1.Location = new Point(37, 29);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(449, 584);
+            tabControl1.Size = new Size(427, 584);
             tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(clearTable);
+            tabPage1.Controls.Add(label12);
             tabPage1.Controls.Add(table_export);
             tabPage1.Controls.Add(dataGridView1);
             tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(441, 551);
+            tabPage1.Size = new Size(419, 551);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "table";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // clearTable
+            // 
+            clearTable.Location = new Point(182, 481);
+            clearTable.Name = "clearTable";
+            clearTable.Size = new Size(94, 29);
+            clearTable.TabIndex = 3;
+            clearTable.Text = "clearTable";
+            clearTable.UseVisualStyleBackColor = true;
+            clearTable.Click += clearTable_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(18, 490);
+            label12.Name = "label12";
+            label12.Size = new Size(0, 20);
+            label12.TabIndex = 2;
+            // 
             // table_export
             // 
-            table_export.Location = new Point(341, 481);
+            table_export.Location = new Point(290, 481);
             table_export.Name = "table_export";
             table_export.Size = new Size(94, 29);
             table_export.TabIndex = 1;
             table_export.Text = "export";
             table_export.UseVisualStyleBackColor = true;
+            table_export.Click += table_export_Click;
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(3, 3);
+            dataGridView1.Location = new Point(6, 3);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(432, 464);
+            dataGridView1.Size = new Size(378, 464);
             dataGridView1.TabIndex = 0;
             // 
             // tabPage2
@@ -806,7 +973,7 @@
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(441, 551);
+            tabPage2.Size = new Size(419, 551);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "code";
             tabPage2.UseVisualStyleBackColor = true;
@@ -820,13 +987,14 @@
             checkBox1.TabIndex = 1;
             checkBox1.Text = "inverse kinematics";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // Gcode_input
             // 
             Gcode_input.Location = new Point(6, 46);
             Gcode_input.Multiline = true;
             Gcode_input.Name = "Gcode_input";
-            Gcode_input.Size = new Size(429, 470);
+            Gcode_input.Size = new Size(372, 470);
             Gcode_input.TabIndex = 0;
             // 
             // panel2
@@ -885,6 +1053,7 @@
             speed_txt.Name = "speed_txt";
             speed_txt.Size = new Size(109, 27);
             speed_txt.TabIndex = 1;
+            speed_txt.TextChanged += speed_txt_TextChanged;
             // 
             // trackBar_speed
             // 
@@ -893,7 +1062,7 @@
             trackBar_speed.Name = "trackBar_speed";
             trackBar_speed.Size = new Size(418, 56);
             trackBar_speed.TabIndex = 0;
-            trackBar_speed.Value = 400;
+            trackBar_speed.Value = 1500;
             trackBar_speed.Scroll += trackBar_speed_Scroll;
             // 
             // output_txt
@@ -1005,12 +1174,56 @@
             trackBar3.Size = new Size(440, 56);
             trackBar3.TabIndex = 14;
             // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(label16);
+            groupBox9.Controls.Add(label15);
+            groupBox9.Controls.Add(label14);
+            groupBox9.Controls.Add(z_fk);
+            groupBox9.Controls.Add(X_fk);
+            groupBox9.Controls.Add(y_fk);
+            groupBox9.Location = new Point(817, 154);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(431, 72);
+            groupBox9.TabIndex = 15;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "groupBox9";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(298, 36);
+            label16.Name = "label16";
+            label16.Size = new Size(29, 20);
+            label16.TabIndex = 11;
+            label16.Text = "Z : ";
+            label16.Click += label16_Click;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(161, 36);
+            label15.Name = "label15";
+            label15.Size = new Size(28, 20);
+            label15.TabIndex = 10;
+            label15.Text = "Y : ";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(12, 36);
+            label14.Name = "label14";
+            label14.Size = new Size(29, 20);
+            label14.TabIndex = 9;
+            label14.Text = "X : ";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1833, 1055);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(1278, 1055);
+            Controls.Add(groupBox9);
             Controls.Add(trackBar3);
             Controls.Add(trackBar2);
             Controls.Add(trackBar1);
@@ -1044,9 +1257,14 @@
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ik_x).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ik_y).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ik_z).EndInit();
             groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
@@ -1065,6 +1283,8 @@
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
+            groupBox9.ResumeLayout(false);
+            groupBox9.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1159,5 +1379,22 @@
         private TrackBar trackBar1;
         private TrackBar trackBar2;
         private TrackBar trackBar3;
+        private Label label12;
+        private CheckBox step2;
+        private CheckBox step1;
+        private CheckBox step4;
+        private CheckBox step3;
+        private TrackBar ik_x;
+        private TrackBar ik_y;
+        private TrackBar ik_z;
+        private Button clearTable;
+        private Label z_fk;
+        private Label y_fk;
+        private Label X_fk;
+        private GroupBox groupBox9;
+        private Label label16;
+        private Label label15;
+        private Label label14;
+        private Button button1;
     }
 }

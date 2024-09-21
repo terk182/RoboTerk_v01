@@ -32,7 +32,7 @@ namespace RoboTerk_v01.services
             link2_and_ee = Math.Sqrt((link2 * link2) + (endeffec * endeffec));
         }
 
-        public AngleModel moveToPos(double x, double y, double z)
+        public AngleModel moveToPos(double x, double y, double z) //ik
         {
 
 
@@ -43,7 +43,7 @@ namespace RoboTerk_v01.services
             //----------มุม ฐาน --------------------------------
 
             var _d = work_space_lan / 2;
-
+            var ggg = (Math.Abs(_y - _d));
 
             var r = Math.Sqrt((_x * _x) + (Math.Abs(_y - _d) * Math.Abs(_y - _d)));
             //  var _theta_base = Math.Acos(_x/r) * 180/Math.PI;
@@ -51,6 +51,7 @@ namespace RoboTerk_v01.services
             //----------มุม 1 --------------------------------
             r = Math.Abs(r - endeffec);
             var _theta = Math.Atan2(r, _b) * 180 / Math.PI;
+
             var _g = Math.Sqrt((r * r) + (_b * _b));
             var _affa = Math.Acos(((link1 * link1) + (_g * _g) - (link2 * link2)) / (2 * link1 * _g)) * 180 / Math.PI;
             var bata = _affa + _theta;
@@ -68,12 +69,24 @@ namespace RoboTerk_v01.services
             result.z = z;
             result.baseAngle = _theta_base;
             //result.theta1 = bata;
-            //result.theta2 =  free ;
-            result.theta1 = bata;
+            result.free =  free ;
+            result.theta1 = 180 - bata;
             result.theta2 = (180 - free - _affa) + (180 - 90 - _theta);
             return result;
         }
 
+        public AngleModel forwordKinematic(double theta1, double theta2, double baseAngle)
+        {
+            var result = new AngleModel();
+            var d1 = (Math.Sin(theta1 * Math.PI / 180)) * link1;
+            var d2 = (Math.Cos(theta1 * Math.PI / 180)) * link1;
+            var d3 = (Math.Cos(theta2 * Math.PI / 180))  * link2;
+            var d4 = (Math.Sin(theta2 * Math.PI / 180))  * link2;
+            result.z = Math.Abs((d4 -  d2)-base_stant) ;
+            result.x =  (Math.Cos(baseAngle * Math.PI / 180))  * (d1 + d3 + endeffec);
+            result.y = (Math.Sin(baseAngle * Math.PI / 180)) * (d1 + d3 + endeffec) + (work_space_lan / 2);
+            return result;
+        }
         public AngleModel startToPos(double x, double y, double z, double g)
         {
             var r = Math.Sqrt((x * x) + (y * y));

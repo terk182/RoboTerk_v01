@@ -14,6 +14,7 @@ namespace RoboTerk_v01.models
         public double theta1 { get; set; }
         public double theta2 { get; set; }
         public double baseAngle { get; set; }
+        public double free { get; set; }
         public double r { get; set; }
     }
 }

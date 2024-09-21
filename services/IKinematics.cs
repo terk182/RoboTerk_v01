@@ -11,5 +11,6 @@ namespace RoboTerk_v01.services
     {
         AngleModel moveToPos(double x, double y, double z);
         AngleModel startToPos(double x, double y, double z, double g);
+        AngleModel forwordKinematic(double theta1, double theta2, double baseAngle);
     }
 }
